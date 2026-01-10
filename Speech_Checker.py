@@ -3,6 +3,8 @@ import sys
 from difflib import SequenceMatcher
 sound = speech.Recognizer()
 
+print(0)
+
 with speech.Microphone() as audio:
     print("Adjusting Energy Level")
     sound.adjust_for_ambient_noise(audio)
@@ -21,9 +23,9 @@ def similar(a, b):
 #     print("Could not understand. Please repeat")
 
 
-#Video_Name = sys.argv[0]
-#File_Path = "Video_Scripts\\" + Video_Name + "_Script.txt"
-File_Path = "Video_Transcriptions\\01_7L_Departure_North.txt"
+Video_Name = sys.argv[0]
+File_Path = "Video_Transcriptions\\" + Video_Name + ".txt"
+#File_Path = "Video_Transcriptions\\01_7L_Departure_North.txt"
 with open(File_Path, 'r') as f:
     Dialogue_Lines = f.readlines()
     f.close()
@@ -52,4 +54,5 @@ while not Finished_Dialogue:
     else:
         Finished_Dialogue = True
 
+print(1)
 
