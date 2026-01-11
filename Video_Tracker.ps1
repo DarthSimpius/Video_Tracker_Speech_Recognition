@@ -5,6 +5,11 @@ $name = $args[0]
 $Student_Name = $args[1]
 $ID = $args[2]
 
+$root = Split-Path -Parent $MyInvocation.MyCommand.Path
+
+
+$completion_status_code = 0
+
 $Quit = $false
 #Write-Output $name
 #Gather user information
@@ -17,6 +22,7 @@ $Quit = $false
 #List all videos available to watch
 $File_Path = "..\..\..\360 Videos\" + $name
 
+#UNCOMMENT --------------------------
 $Files = Get-ChildItem -Path '..\..\..\360 Videos' -Name
 $i = -1
 foreach ($Vid in $Files) {
@@ -27,53 +33,48 @@ foreach ($Vid in $Files) {
     $i++
 }
 
-#Ask user what video they would like to watch
-#$Valid_Selection = $false
-#do {
-#    [int]$Video = Read-Host "Please select what video to play. Enter a number 1-$($i-1)"
-#    if ($Video -gt 0 -and $Video -lt $i) {
-#        $Valid_Selection = $true
-#    }
-#} while (!$Valid_Selection)
+#COMMENT ---------------------
+#$Video_num = 1
 
-#Launch the video in steamvr
-#$File_Path = "C:\Users\svfr_\OneDrive\Documents\360 Videos\" + $Files[$($Video-1)]
-#Write-Output "$File_Path"
 #START THE VIDEO TRANCSRIPTION SCRIPT
 #THIS SHOULD RUN PARALLEL TO THE STEAMVR VIDEO AND RECORD THE DIALOGUE FROM THE USER
 #RETURNS A 1 IF ALL DIALOGUE CHECKS WERE SUCCESSFUL AND A 0 IF NOT
-$venv = "Video_Tracker_Speech_Recognition\speech_venv\Scripts\python.exe"
-$Script_File_Path = "Video_Tracker_Speech_Recognition\Speech_Checker.py"
+$venv = Join-Path $root "speech_venv\Scripts\python.exe"
+$Script_File_Path = Join-Path $root "Speech_Checker.py"
 $Video_Transcription = Start-Job -ScriptBlock {
-    param($venv, $Script_File_Path, $vid_name)
-    & $venv $Script_File_Path $vid_name
-} -ArgumentList $venv $Script_File_Path $name
+    param($jvenv, $jScript_File_Path, $jvid_name)
+    & $jvenv $jScript_File_Path $jvid_name
+} -ArgumentList @($venv, $Script_File_Path, $name)
 
+#UNCOMMENT -----------------
 $Time_Watched = Measure-Command {
-    Start-Process -FilePath $File_Path -Wait
+   Start-Process -FilePath $File_Path -Wait
 }
 $Time_Watched = $Time_Watched.TotalMinutes
+
+#COMMENT ----------------
 #$Time_Watched = 25
 
-$Trancsription_Result = Receive-Job $Video_Transcription -AutoRemoveJob
+$Transcription_Result = Receive-Job $Video_Transcription
+Stop-Job $Video_Transcription
+Remove-Job $Video_Transcription 
 
+
+#UNCOMMENT -------------
 #Check if the user has watched the full video
 $Shell = New-Object -COMObject Shell.Application
-#$Folder = Split-Path -Parent $File_Path
-#$Folder = Split-Path $File_Path
 $Folder = Split-Path (Resolve-Path -Path $File_Path)
 $Folder = $Folder + '\'
-#Write-Output $Folder
 $File = Split-Path $File_Path -Leaf
-#Write-Output $File
 $Shell_Folder = $Shell.Namespace($Folder)
-#$Shell_Folder = $Shell.Namespace((Resolve-Path -Path $File_Path))
-#Write-Output $Shell_Folder.Title
 $Shell_File = $Shell_Folder.ParseName($File)
 $Video_Length = [timespan]::Parse($Shell_Folder.GetDetailsOf($Shell_File, 27)).TotalMinutes
 
+#COMMENT -----------
+#$Video_Length = 25
 
-if ($Time_Watched -ge ($Video_Length * 0.9) -and $Trancsription_Result[-1] -eq 1) {
+
+if ($Time_Watched -ge ($Video_Length * 0.9)) {
     #If the user has watched the full video, log it to the csv file
     #$Csv = Import-Csv "..\powershell_test_output.csv"
     #$Student_Exists = $false
@@ -117,6 +118,17 @@ if ($Time_Watched -ge ($Video_Length * 0.9) -and $Trancsription_Result[-1] -eq 1
     #$Password = ConvertTo-SecureString $ID -AsPlainText -Force
     #THE ENCRYPTED ID
     #$EP = ConvertFrom-SecureString $Password -Key $EncryptionKeyData
+    if ($Transcription_Result) {
+        if ($Transcription_Result[-1] -eq 1) {
+            $completion_status_code = 2
+        }
+        else {
+            $completion_status_code = 1
+        }
+    }
+    else {
+        $completion_status_code = 1
+    }
 
     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
     $headers.Add("Content-Type", "application/json")
@@ -125,7 +137,7 @@ if ($Time_Watched -ge ($Video_Length * 0.9) -and $Trancsription_Result[-1] -eq 1
     {
     `"id`": `"$ID`",
     `"videoNumber`": `"$video_num`",
-    `"status`": `"1`"
+    `"status`": `"$completion_status_code`"
     }
 "@
 
@@ -134,6 +146,7 @@ if ($Time_Watched -ge ($Video_Length * 0.9) -and $Trancsription_Result[-1] -eq 1
 }
 
 
+#Remove-Job $Video_Transcription
 
 #Read-Host -Prompt "Press Enter to exit"
 #Remove all variables at the end of the process

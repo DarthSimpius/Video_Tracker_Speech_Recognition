@@ -1,7 +1,10 @@
 import speech_recognition as speech
 import sys
 from difflib import SequenceMatcher
+import os
+
 sound = speech.Recognizer()
+script_dir = os.path.dirname(os.path.realpath(__file__))
 
 print(0)
 
@@ -23,9 +26,10 @@ def similar(a, b):
 #     print("Could not understand. Please repeat")
 
 
-Video_Name = sys.argv[0]
-File_Path = "Video_Transcriptions\\" + Video_Name + ".txt"
-#File_Path = "Video_Transcriptions\\01_7L_Departure_North.txt"
+Video_Name = sys.argv[1] + ".txt"
+File_Path = script_dir + "\\Video_Transcriptions\\" + Video_Name
+#File_Path = R"Video_Tracker_Speech_Recognition\Video_Transcriptions\01-1- 7L Departure North.txt"
+#File_Path = R"C:\Users\taran\Github Project\Video_Tracker_Speech_Recognition\Video_Transcriptions\01-1- 7L Departure North.txt"
 with open(File_Path, 'r') as f:
     Dialogue_Lines = f.readlines()
     f.close()
