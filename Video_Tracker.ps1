@@ -1,5 +1,5 @@
 #Get-Process vrmonitor | select starttime
-#PROGRAM ARGUMENTS
+#PROGRAM ARGUMENTS: video_name student_name student_id
 #param($name)
 $name = $args[0]
 $Student_Name = $args[1]
@@ -9,15 +9,6 @@ $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 
 $completion_status_code = 0
-
-$Quit = $false
-#Write-Output $name
-#Gather user information
-#do {
-#    $Student_Name = Read-Host "Please enter your name"
-#    [int]$ID = Read-Host "Please enter your Student ID"
-#    #Write-Output "$ID"
-#} while ($Quit -eq $false -and !($ID -and ($Student_Name -ne "")))
 
 #List all videos available to watch
 $File_Path = "..\..\..\360 Videos\" + $name
@@ -36,7 +27,7 @@ foreach ($Vid in $Files) {
 #COMMENT ---------------------
 #$Video_num = 1
 
-#START THE VIDEO TRANCSRIPTION SCRIPT
+#START THE VIDEO TRANSCRIPTION SCRIPT
 #THIS SHOULD RUN PARALLEL TO THE STEAMVR VIDEO AND RECORD THE DIALOGUE FROM THE USER
 #RETURNS A 1 IF ALL DIALOGUE CHECKS WERE SUCCESSFUL AND A 0 IF NOT
 $venv = Join-Path $root "speech_venv\Scripts\python.exe"
@@ -75,6 +66,9 @@ $Video_Length = [timespan]::Parse($Shell_Folder.GetDetailsOf($Shell_File, 27)).T
 
 
 if ($Time_Watched -ge ($Video_Length * 0.9)) {
+    #Record time of completion
+    $Completion_Date = Get-Date -UFormat "%m/%d/%Y %R"
+
     #If the user has watched the full video, log it to the csv file
     #$Csv = Import-Csv "..\powershell_test_output.csv"
     #$Student_Exists = $false
@@ -137,7 +131,8 @@ if ($Time_Watched -ge ($Video_Length * 0.9)) {
     {
     `"id`": `"$ID`",
     `"videoNumber`": `"$video_num`",
-    `"status`": `"$completion_status_code`"
+    `"status`": `"$completion_status_code`",
+    `"date`": `"$Completion_Date`"
     }
 "@
 
