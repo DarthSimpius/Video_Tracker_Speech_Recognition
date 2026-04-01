@@ -1,6 +1,6 @@
-Daytona Beach Clearance, Riddle four eighty-one, requesting V-F-R departure to south practice area, information Delta.
-Daytona Ground, riddle four eighty-one, Romeo three, ready to taxi.
-Riddle four eighty-one, runway seven right, taxi via echo sierra, hold short runway seven left.
-Daytona Tower, Riddle four eighty-one, holding short of seven right at Sierra, ready for departure
-Daytona departure, Riddle four eighty-one, niner hundred climbing three thousand, heading one one zero.
-Daytona departure, Riddle four eighty-one, request terminate.
+Daytona Beach Clearance, Riddle 481, requesting VFR departure to south practice area, information Delta.
+Daytona Ground, riddle 481, Romeo 3, ready to taxi.
+Riddle 481, runway 7 right, taxi via echo sierra, hold short runway 7 left.
+Daytona Tower, Riddle 481, holding short of 7 right at Sierra, ready for departure
+Daytona departure, Riddle 481, niner hundred climbing 3000, heading 1 1 0.
+Daytona departure, Riddle 481, request terminate.

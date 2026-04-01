@@ -1,8 +1,8 @@
-Deland traffic, Skyhawk four eighty-one echo romeo, upwind, runway one two, left traffic, Deland.
-Deland traffic, Skyhawk four eighty-one echo romeo, turning left crosswind, runway one two, Deland.
-Deland traffic, Skyhawk four eighty-one echo romeo, turning left downwind, runway one two, Deland.
-Deland traffic, Skyhawk four eighty-one echo romeo, left downwind, runway one two, full stop, Deland.
-Deland traffic, Skyhawk four eighty-one echo romeo, turning left base, runway one two, Deland.
-Deland traffic, Skyhawk four eighty-one echo romeo, left base turning final, runway one two, Deland.
-Deland traffic, Skyhawk four eighty-one echo romeo, taxiing runway one two via delta, Deland.
-Deland traffic, Skyhawk four eighty-one echo romeo, taxiing to FBO via delta, alpha, Deland.
+Deland traffic, Skyhawk 481 echo romeo, upwind, runway 1 2, left traffic, Deland.
+Deland traffic, Skyhawk 481 echo romeo, turning left crosswind, runway 1 2, Deland.
+Deland traffic, Skyhawk 481 echo romeo, turning left downwind, runway 1 2, Deland.
+Deland traffic, Skyhawk 481 echo romeo, left downwind, runway 1 2, full stop, Deland.
+Deland traffic, Skyhawk 481 echo romeo, turning left base, runway 1 2, Deland.
+Deland traffic, Skyhawk 481 echo romeo, left base turning final, runway 1 2, Deland.
+Deland traffic, Skyhawk 481 echo romeo, taxiing runway 1 2 via delta, Deland.
+Deland traffic, Skyhawk 481 echo romeo, taxiing to FBO via delta, alpha, Deland.

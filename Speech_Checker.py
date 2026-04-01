@@ -46,7 +46,7 @@ while not Finished_Dialogue:
         try:
             Spoken = sound.recognize_google(said)
             print(Spoken)
-            if similar(Spoken,Dialogue_Lines[Dialogue_Index]) > 0.6:
+            if similar(Spoken,Dialogue_Lines[Dialogue_Index]) > 0.2:
                 Dialogue_Index += 1
                 print("Check Passed")
             else:

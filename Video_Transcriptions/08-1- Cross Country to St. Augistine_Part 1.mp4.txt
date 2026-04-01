@@ -1,3 +1,3 @@
-Daytona Departure, Riddle four eighty-one, requesting momentary frequency change to open flight plan.
-Saint Petersburg radio, Riddle four eighty-one, sending and receiving one two two point four.
-Jacksonville approach, Riddle four eighty-one, five thousand five hundred.
+Daytona Departure, Riddle 481, requesting momentary frequency change to open flight plan.
+Saint Petersburg radio, Riddle 481, sending and receiving 1 2 2 point 4.
+Jacksonville approach, Riddle 481, 5500.
