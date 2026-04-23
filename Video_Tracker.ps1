@@ -113,7 +113,7 @@ if ($Time_Watched -ge ($Video_Length * 0.9)) {
     #THE ENCRYPTED ID
     #$EP = ConvertFrom-SecureString $Password -Key $EncryptionKeyData
     if ($Transcription_Result) {
-        if ($Transcription_Result[-1] -eq 1) {
+        if ($Transcription_Result[-1] -ge 0.5) {
             $completion_status_code = 2
         }
         else {
@@ -124,6 +124,8 @@ if ($Time_Watched -ge ($Video_Length * 0.9)) {
         $completion_status_code = 1
     }
 
+    $score = [double]$Transcription_Result[-1]
+    $grade = ($score * 100).ToString() + "%"
     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
     $headers.Add("Content-Type", "application/json")
 
@@ -132,7 +134,8 @@ if ($Time_Watched -ge ($Video_Length * 0.9)) {
     `"id`": `"$ID`",
     `"videoNumber`": `"$video_num`",
     `"status`": `"$completion_status_code`",
-    `"date`": `"$Completion_Date`"
+    `"date`": `"$Completion_Date`",
+    `"grade`": `"$grade`"
     }
 "@
 

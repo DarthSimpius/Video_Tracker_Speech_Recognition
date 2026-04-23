@@ -37,6 +37,7 @@ with open(File_Path, 'r') as f:
 
 Finished_Dialogue = False
 Dialogue_Index = 0
+Average_Similarity = 0
 while not Finished_Dialogue:
     if (Dialogue_Index != len(Dialogue_Lines)):
         with speech.Microphone() as audio:
@@ -46,7 +47,9 @@ while not Finished_Dialogue:
         try:
             Spoken = sound.recognize_google(said)
             print(Spoken)
-            if similar(Spoken,Dialogue_Lines[Dialogue_Index]) > 0.2:
+            Result = similar(Spoken,Dialogue_Lines[Dialogue_Index])
+            Average_Similarity += Result
+            if Result > 0.2:
                 Dialogue_Index += 1
                 print("Check Passed")
             else:
@@ -58,5 +61,6 @@ while not Finished_Dialogue:
     else:
         Finished_Dialogue = True
 
-print(1)
+Average_Similarity = round(Average_Similarity / len(Dialogue_Lines), 2)
+print(Average_Similarity)
 
